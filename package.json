@@ -1,0 +1,22 @@
+{
+  "name": "starter",
+  "version": "1.0.0",
+  "description": "Learning node, express and mongoDB",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Thna17/Express.git"
+  },
+  "author": "Hong Than Brathna",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Thna17/Express/issues"
+  },
+  "homepage": "https://github.com/Thna17/Express#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
