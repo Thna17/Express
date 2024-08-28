@@ -1,5 +1,4 @@
-const fs = require('fs');
-const Tour = require('./../models/tourModel');
+const Tour = require('../models/tourModel');
 
 exports.getAllTours = async (req, res) => {
   try {
@@ -19,19 +18,24 @@ exports.getAllTours = async (req, res) => {
   }
 };
 
-// exports.getTourById = (req, res) => {
-//   console.log(req.params);
-//   const id = req.params.id * 1;
-
-//   const tour = tours.find((el) => el.id === id);
-
-//   res.status(200).json({
-//     status: 'success',
-//     data: {
-//       tour,
-//     },
-//   });
-// };
+exports.getTourById = async (req, res) => {
+  try {
+    const tour = await Tour.findById(req.params.id);
+    console.log(tour);
+    // Tour.findOne({_id: req.params.id})
+    res.status(200).json({
+      status: 'success',
+      data: {
+        tour,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: 'No tour found with that ID',
+    });
+  }
+};
 
 exports.createTour = async (req, res) => {
   // const newTour = new Tour({})
@@ -52,18 +56,37 @@ exports.createTour = async (req, res) => {
   }
 };
 
-exports.updateTour = (req, res) => {
-  res.status(200).json({
-    status: 'success',
-    data: {
-      tour: '<Updated tour here>',
-    },
-  });
+exports.updateTour = async (req, res) => {
+  try {
+    const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    res.status(200).json({
+      status: 'success',
+      data: {
+        tour,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: 'No tour found with that ID',
+    });
+  }
 };
 
-exports.deleteTour = (req, res) => {
-  res.status(204).json({
-    status: 'success',
-    data: null,
-  });
+exports.deleteTour = async (req, res) => {
+  try {
+    await Tour.findByIdAndDelete(req.params.id);
+    res.status(204).json({
+      status: 'success',
+      data: null,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: 'No tour found with that ID',
+    });
+  }
 };
