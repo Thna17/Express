@@ -38,10 +38,9 @@ exports.getTourById = async (req, res) => {
 };
 
 exports.createTour = async (req, res) => {
-  // const newTour = new Tour({})
-  // newTour.save()
   try {
     const newTour = await Tour.create(req.body);
+    console.log('New tour created:', newTour);
     res.status(201).json({
       status: 'success',
       data: {
@@ -49,9 +48,10 @@ exports.createTour = async (req, res) => {
       },
     });
   } catch (err) {
+    console.error('Error creating tour:', err.message);
     res.status(400).json({
       status: 'fail',
-      message: 'Invalid data sent',
+      message: err.message,
     });
   }
 };
